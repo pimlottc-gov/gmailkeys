@@ -35,6 +35,7 @@ SetTitleMatchMode 2 ;allow partial match to window titles
 ;subject of a message or task).
 ;#IfWinActive, - Microsoft Outlook ahk_class rctrl_renwnd32, NUIDocumentWindow	;for Outlook 2010, uncomment this line
 #IfWinActive, - Outlook ahk_class rctrl_renwnd32, NUIDocumentWindow		;for Outlook 2013, uncomment this line
+e::HandleOutlookKeys("^+1", "e") ;archive message using Quick Steps hotkey (ctrl+Shift+1)
 y::HandleOutlookKeys("^+1", "y") ;archive message using Quick Steps hotkey (ctrl+Shift+1)
 f::HandleOutlookKeys("^f", "f") ;forwards message
 r::HandleOutlookKeys("^r", "r") ;replies to message
