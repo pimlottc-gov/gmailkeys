@@ -29,7 +29,7 @@ SetTitleMatchMode 2 ;allow partial match to window titles
 ;************************
 ;Hotkeys for Outlook 2013
 ;************************
-;As best I (Ty Myrick) can tell, the window text 'NUIDocumentWindow' is not present on 
+;As best I (Ty Myrick) can tell, the window text 'NUIDocumentWindow' is not present on
 ;any other items except the main window. Also, I look for the phrase ' - Microsoft Outlook'
 ;in the title, which will not appear in the title (unless a user types this string into the
 ;subject of a message or task).
@@ -59,34 +59,34 @@ l::HandleOutlookKeys("!3", "l") ;categorize message using All Categories hotkey 
 ;Passes Outlook a special key combination for custom keystrokes or normal key value, depending on context
 HandleOutlookKeys( specialKey, normalKey )
 {
-;Activates key only on main outlook window, not messages, tasks, contacts, etc.
-;IfWinActive, - Microsoft Outlook ahk_class rctrl_renwnd32, NUIDocumentWindow, ,	;for Outlook 2010, uncomment this line
-IfWinActive, - Outlook ahk_class rctrl_renwnd32, NUIDocumentWindow, ,			;for Outlook 2013, uncomment this line
-{
-;Find out which control in Outlook has focus
-ControlGetFocus currentCtrl, A
-; MsgBox, Control with focus = %currentCtrl%
-;Set list of controls that should respond to specialKey. Controls are the list of emails and the main
-;(and minor) controls of the reading pane, including controls when viewing certain attachments.
-;Currently I handle archiving when viewing attachments of Word, Excel, Powerpoint, Text, jpgs, pdfs
-;The control 'RichEdit20WPT1' (email subject line) is used extensively for inline editing. Thus it 
-;had to be removed. If an email's subject has focus, it won't archive...
-ctrlList = Acrobat Preview Window1,AfxWndW5,AfxWndW6,EXCEL71,MsoCommandBar1,OlkPicturePreviewer1,paneClassDC1,OutlookGrid1,OutlookGrid2,RichEdit20WPT2,RichEdit20WPT4,RichEdit20WPT5,RICHEDIT50W1,SUPERGRID2,SUPERGRID1,_WwG1
-if currentCtrl in %ctrlList%
-{
-; MsgBox, Control in list.
-Send %specialKey%
-}
-;Allow typing normalKey somewhere else in the main Outlook window. (Like the search field or the folder pane.)
-else
-{
-; MsgBox, Control not in list.
-Send %normalKey%
-}
-}
-;Allow typing normalKey in another window type within Outlook, like a mail message, task, appointment, etc.
-else
-{
-Send %normalKey%
-}
+  ;Activates key only on main outlook window, not messages, tasks, contacts, etc.
+  ;IfWinActive, - Microsoft Outlook ahk_class rctrl_renwnd32, NUIDocumentWindow, ,	;for Outlook 2010, uncomment this line
+  IfWinActive, - Outlook ahk_class rctrl_renwnd32, NUIDocumentWindow, ,			;for Outlook 2013, uncomment this line
+  {
+    ;Find out which control in Outlook has focus
+    ControlGetFocus currentCtrl, A
+    ; MsgBox, Control with focus = %currentCtrl%
+    ;Set list of controls that should respond to specialKey. Controls are the list of emails and the main
+    ;(and minor) controls of the reading pane, including controls when viewing certain attachments.
+    ;Currently I handle archiving when viewing attachments of Word, Excel, Powerpoint, Text, jpgs, pdfs
+    ;The control 'RichEdit20WPT1' (email subject line) is used extensively for inline editing. Thus it
+    ;had to be removed. If an email's subject has focus, it won't archive...
+    ctrlList = Acrobat Preview Window1,AfxWndW5,AfxWndW6,EXCEL71,MsoCommandBar1,OlkPicturePreviewer1,paneClassDC1,OutlookGrid1,OutlookGrid2,RichEdit20WPT2,RichEdit20WPT4,RichEdit20WPT5,RICHEDIT50W1,SUPERGRID2,SUPERGRID1,_WwG1
+    if currentCtrl in %ctrlList%
+    {
+      ; MsgBox, Control in list.
+      Send %specialKey%
+    }
+    ;Allow typing normalKey somewhere else in the main Outlook window. (Like the search field or the folder pane.)
+    else
+    {
+      ; MsgBox, Control not in list.
+      Send %normalKey%
+    }
+  }
+  ;Allow typing normalKey in another window type within Outlook, like a mail message, task, appointment, etc.
+  else
+  {
+    Send %normalKey%
+  }
 }
