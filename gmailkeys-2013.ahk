@@ -33,8 +33,10 @@ SetTitleMatchMode 2 ;allow partial match to window titles
 ;any other items except the main window. Also, I look for the phrase ' - Microsoft Outlook'
 ;in the title, which will not appear in the title (unless a user types this string into the
 ;subject of a message or task).
-;#IfWinActive, - Microsoft Outlook ahk_class rctrl_renwnd32, NUIDocumentWindow	;for Outlook 2010, uncomment this line
-#IfWinActive, - Outlook ahk_class rctrl_renwnd32, NUIDocumentWindow		;for Outlook 2013, uncomment this line
+
+#If
+  WinActive("- Microsoft Outlook ahk_class rctrl_renwnd32", "NUIDocumentWindow") or ;Outlook 2010
+  WinActive(" - Outlook ahk_class rctrl_renwnd32", "NUIDocumentWindow")             ;Outlook 2013
 e::HandleOutlookKeys("^+1", "e") ;archive message using Quick Steps hotkey (ctrl+Shift+1)
 y::HandleOutlookKeys("^+1", "y") ;archive message using Quick Steps hotkey (ctrl+Shift+1)
 f::HandleOutlookKeys("^f", "f") ;forwards message
@@ -56,13 +58,14 @@ c::HandleOutlookKeys("^n", "c") ;new message
 l::HandleOutlookKeys("!3", "l") ;categorize message using All Categories hotkey in Quick Access Toolbar (Alt+3)
 +3::HandleOutlookKeys("{Delete}", "+3") ;delete selected message(s)
 +1::HandleOutlookKeys("!4", "+1") ;Mark message as spam using Block Sender hotkey in Quick Access Toolbar (Alt+4)
-#IfWinActive
+#If
+
 ;Passes Outlook a special key combination for custom keystrokes or normal key value, depending on context
 HandleOutlookKeys( specialKey, normalKey )
 {
   ;Activates key only on main outlook window, not messages, tasks, contacts, etc.
-  ;IfWinActive, - Microsoft Outlook ahk_class rctrl_renwnd32, NUIDocumentWindow, ,	;for Outlook 2010, uncomment this line
-  IfWinActive, - Outlook ahk_class rctrl_renwnd32, NUIDocumentWindow, ,			;for Outlook 2013, uncomment this line
+  IfWinActive, - Microsoft Outlook ahk_class rctrl_renwnd32, NUIDocumentWindow, ,	;for Outlook 2010, uncomment this line
+  ;IfWinActive, - Outlook ahk_class rctrl_renwnd32, NUIDocumentWindow, ,			;for Outlook 2013, uncomment this line
   {
     ;Find out which control in Outlook has focus
     ControlGetFocus currentCtrl, A
